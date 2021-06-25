@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import reactor.core.publisher.ParallelFlux;
 
 import java.util.List;
 
@@ -44,8 +45,8 @@ public class MembreController {
 
     // get all Membre
     @GetMapping("/membre")
-    public ResponseEntity<List<Membre>> getAllMembre(){
-        List<Membre> res= membreService.getAllMembre();
+    public ResponseEntity<ParallelFlux<Membre>> getAllMembre(){
+        ParallelFlux<Membre> res= membreService.getAllMembre();
 
         return  ResponseEntity.ok().body(res);
     }
@@ -53,7 +54,7 @@ public class MembreController {
     // get One Membre by id
     @GetMapping("/membre/{id}")
     public ResponseEntity<Membre> getOneMembre(@PathVariable Long id){
-        Membre res= membreService.getMembre(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"Element not found"));
+        Membre res= membreService.getMembre(id);
 
         return  ResponseEntity.ok().body(res);
     }

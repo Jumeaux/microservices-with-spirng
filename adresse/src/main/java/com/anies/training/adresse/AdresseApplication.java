@@ -14,10 +14,23 @@ public class AdresseApplication {
 		SpringApplication.run(AdresseApplication.class, args);
 	}
 
+
+	/*
+	    Hibernate5Module
+		mettre tous les proxys à null
+		ex: la relation Menage-Adresse
+		lorqu'on retourne un menage le proxy adresse serai null
+	 */
 	@Bean
 	public Hibernate5Module dataTypeHibernateModule(){
 		Hibernate5Module module= new Hibernate5Module();
 		module.disable(Hibernate5Module.Feature.USE_TRANSIENT_ANNOTATION);
+		/*
+			retouner un proxy pour en faire des objets au lieu de retouner un proxy null
+			ex: proxyAdresse-->Adresse
+		*/
+		module.enable(Hibernate5Module.Feature.SERIALIZE_IDENTIFIER_FOR_LAZY_NOT_LOADED_OBJECTS);
+
 		return  module;
 	}
 }

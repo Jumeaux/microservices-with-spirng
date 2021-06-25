@@ -46,7 +46,7 @@ public class MenageImpl implements MenageService {
           List<Menage> menages=menageRepository.findAll();
           menages.forEach(menage -> {
               menage.setAdresse(
-                      restTemplate.getForObject("http://localhost:8081/api/adresse/"+menage.getAdresse_id(), Adresse.class)
+                      restTemplate.getForObject("http://adresse-service/api/adresse/"+menage.getAdresse_id(), Adresse.class)
               );
           });
 
